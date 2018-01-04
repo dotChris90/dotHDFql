@@ -45,3 +45,5 @@ test/test.hdfqlLib/obj/test.hdfqlLib.csproj.nuget.g.props
 test/test.hdfqlLib/obj/test.hdfqlLib.csproj.nuget.g.targets
 test/test.hdfqlLib/obj/Debug/netcoreapp2.0/test.hdfqlLib.dll
 test/test.hdfqlLib/obj/Debug/netcoreapp2.0/test.hdfqlLib.pdb
+test/test.pythonDLLLoad/validateHDFqlDLL.py
+test/test.pythonDLLLoad/.vscode/launch.json

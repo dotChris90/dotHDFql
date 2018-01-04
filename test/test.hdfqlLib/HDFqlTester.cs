@@ -9,6 +9,7 @@ namespace test.hdfqlLib
         protected double[] _doubleVector;
         protected double[,] _doubleMatrix;
         protected int[,] _intMatrix;
+        protected double[,,] _doubleTensor;
         protected void CreateGroups()
         {
             int errorCode = AS.HDFql.HDFql.Execute("CREATE GROUP group1");
@@ -24,6 +25,14 @@ namespace test.hdfqlLib
             Assert.Equal(0,errorCode);    
             errorCode = AS.HDFql.HDFql.Execute("CREATE DATASET group1/set2 AS DOUBLE(2,2)");
             Assert.Equal(0,errorCode);
+
+            for (int idx = 0; idx < 15;idx++)
+            {
+                string cmd = "CREATE DATASET group2/set2" + idx.ToString() +  " AS DOUBLE(100,1000,1000)";
+                errorCode = AS.HDFql.HDFql.Execute(cmd);
+                Assert.Equal(0,errorCode);
+            }
+
         }
         protected void InsertArrays()
         {
@@ -47,6 +56,16 @@ namespace test.hdfqlLib
             AS.HDFql.HDFql.VariableRegister(_intMatrix);
             AS.HDFql.HDFql.Execute("INSERT INTO group2/set1 VALUES FROM MEMORY 0");
             AS.HDFql.HDFql.VariableUnregister(_intMatrix);
+
+            var loalDoubleTensor = new double[100,1000,1000];
+
+            AS.HDFql.HDFql.VariableRegister(loalDoubleTensor);
+            for (int idx = 0; idx < 15;idx++)
+            {
+                string cmd = "INSERT INTO group2/set2" + idx.ToString() +  " VALUES FROM MEMORY 0";
+                AS.HDFql.HDFql.Execute(cmd);
+            }
+            AS.HDFql.HDFql.VariableUnregister(loalDoubleTensor);
         }
         public HDFqlTester()
         {
@@ -100,7 +119,7 @@ namespace test.hdfqlLib
 
             AS.HDFql.HDFql.Execute("SHOW DATASET group2/");
             resultCardinality = AS.HDFql.HDFql.CursorGetCount();
-            Assert.Equal(1,resultCardinality);
+            Assert.Equal(2,resultCardinality);
 
             errorCode = AS.HDFql.HDFql.CursorFirst();
             Assert.Equal(0,errorCode);
@@ -133,5 +152,6 @@ namespace test.hdfqlLib
 
             Assert.Equal(_intMatrix,intMatrixStore);
         }
+
     }
 }
