@@ -25,7 +25,7 @@ namespace test.hdfqlLib
             Assert.Equal(0,errorCode);    
             errorCode = AS.HDFql.HDFql.Execute("CREATE DATASET group1/set2 AS DOUBLE(2,2)");
             Assert.Equal(0,errorCode);
-
+            // takes so long time ....
             for (int idx = 0; idx < 15;idx++)
             {
                 string cmd = "CREATE DATASET group2/set2" + idx.ToString() +  " AS DOUBLE(100,1000,1000)";
